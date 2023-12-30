@@ -755,7 +755,7 @@ int  wlanGetConnacTailerInfo(
 		       prRegTailer->u4BlockSize);
 		if( extract_mode == TRUE ){
 			#ifndef MAX_STRLEN_OUTPUT_FILE
-				#define MAX_STRLEN_OUTPUT_FILE 16
+				#define MAX_STRLEN_OUTPUT_FILE 64
 			#endif
 			snprintf(extract_mode_struct.current_name, MAX_STRLEN_OUTPUT_FILE, "out_%d_0x%x", u4SecIdx, prRegTailer->u4Addr);
 			/** create a new file with the name of "extract_mode_struct.current_name" **/
