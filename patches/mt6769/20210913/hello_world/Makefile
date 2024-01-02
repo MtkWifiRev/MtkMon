@@ -7,6 +7,14 @@ COMMON_SRCS=$(wildcard $(NEXMON_ROOT)/patches/common/*.c)
 OBJS=$(addprefix obj/,$(notdir $(LOCAL_SRCS:.c=.o)) $(notdir $(COMMON_SRCS:.c=.o)) $(notdir $(FW_SRCS:.c=.o)))
 
 CFLAGS= \
+	-fplugin=$(CCPLUGIN) \
+	-fplugin-arg-nexmon-objfile=$@ \
+	-fplugin-arg-nexmon-prefile=gen/nexmon.pre \
+	-fplugin-arg-nexmon-chipver=$(NEXMON_CHIP_NUM) \
+	-fplugin-arg-nexmon-fwver=$(NEXMON_FW_VERSION_NUM) \
+	-fplugin-arg-nexmon-fwfile=segment2_00980000_mod.bin \
+	-DNEXMON_CHIP=$(NEXMON_CHIP) \
+	-DNEXMON_FW_VERSION=$(NEXMON_FW_VERSION) \
     -Wall -Werror -O3 -nostdlib -nostartfiles -ffreestanding \
 	-ffunction-sections -fdata-sections \
 	-I$(NEXMON_ROOT)/patches/include \
@@ -22,7 +30,7 @@ init: FORCE
 obj/%.o: src/%.c
 	@printf "\033[0;31m  COMPILING\033[0m %s => %s (details: log/compiler.log)\n" $< $@
 	$(Q)cat gen/nexmon.pre 2>>log/error.log | gawk '{ if ($$3 != "$@") print; }' > tmp && mv tmp gen/nexmon.pre
-	$(Q)$(CC)gcc $(CFLAGS) -c $< -o $@ -Wa,--qca,test >>log/compiler.log
+	$(Q)$(CC)gcc $(CFLAGS) -c $< -o $@ >>log/compiler.log
 
 
 obj/%.o: $(NEXMON_ROOT)/patches/common/%.c

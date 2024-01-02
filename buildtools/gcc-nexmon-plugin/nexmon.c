@@ -26,34 +26,6 @@ static struct attribute_spec user_attr =
 	.handler = handle_nexmon_place_at_attribute,
 };
 
-static void 
-pre_genericize_callback(void *event_data, void *user_data) {
-    tree t = (tree)event_data;
-	const char *decl_name = IDENTIFIER_POINTER(DECL_NAME(t));
-    const char *call8 = "call8_";
-    char asm_str_start[] = "rsr.litbase a15\n \
-                            movi a14, 0 \n \
-                            wsr.litbase a14\n \
-                            rsync\n";
-
-    printf("FUNCTION NAME: %s\n", decl_name);
-
-    /* Ignore functions which starts with "call8_", those are just dummies */
-    if(strncmp(call8, decl_name, strlen(call8)) == 0) {
-        return;
-    }
-    tree dt = DECL_SAVED_TREE(t);
-    tree body_stmt = BIND_EXPR_BODY(dt);
-    //printf("tree code:: %d == %d\n", TREE_CODE(body_stmt), STATEMENT_LIST);
-
-    tree s_start = build_string(sizeof(asm_str_start), asm_str_start);
-    tree asm_expr_start = build_asm_expr(EXPR_LOCATION(dt), s_start, NULL, NULL, NULL, NULL, true, false);
-    tree asm_stmt_start = build_asm_stmt(true, asm_expr_start);
-
-    tree_stmt_iterator i = tsi_start(body_stmt);
-    tsi_link_before(&i, asm_stmt_start, TSI_SAME_STMT);
-}
-
 static tree
 handle_nexmon_place_at_attribute(tree *node, tree name, tree args, int flags, bool *no_add_attr)
 {
@@ -131,9 +103,9 @@ handle_pragma_targetregion(cpp_reader *dummy)
 {
 	tree message = 0;
 	if (pragma_lex(&message) != CPP_STRING) {
-      	printf ("<#pragma NEXMON targetregion> is not a string");
-      	return;
-    }
+		printf ("<#pragma NEXMON targetregion> is not a string");
+		return;
+	}
 
  	if (TREE_STRING_LENGTH (message) > 1) {
 		targetregion = TREE_STRING_POINTER (message);
@@ -181,7 +153,6 @@ plugin_init(struct plugin_name_args *info, struct plugin_gcc_version *ver)
 		return -1;
 	}
 
-    register_callback("nexmon", PLUGIN_PRE_GENERICIZE, pre_genericize_callback, NULL);
 	register_callback("nexmon", PLUGIN_ATTRIBUTES, register_attributes, NULL);
 	register_callback("nexmon", PLUGIN_PRAGMAS, register_pragmas, NULL);
 	register_callback("nexmon", PLUGIN_FINISH, handle_plugin_finish, NULL);

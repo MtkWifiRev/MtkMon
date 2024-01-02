@@ -33,6 +33,7 @@
  **************************************************************************/
 
 #define JalPatch(name, func) \
+    __attribute__((naked)) \
     void \
     jal_ ## name(void) { asm("jal " #func "\n"); }
 
