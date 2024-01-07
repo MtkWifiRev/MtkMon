@@ -12,7 +12,7 @@ CFLAGS= \
 	-fplugin-arg-nexmon-prefile=gen/nexmon.pre \
 	-fplugin-arg-nexmon-chipver=$(NEXMON_CHIP_NUM) \
 	-fplugin-arg-nexmon-fwver=$(NEXMON_FW_VERSION_NUM) \
-	-fplugin-arg-nexmon-fwfile=segment2_00980000_mod.bin \
+	-fplugin-arg-nexmon-fwfile=$(RAM_FILE) \
 	-DNEXMON_CHIP=$(NEXMON_CHIP) \
 	-DNEXMON_FW_VERSION=$(NEXMON_FW_VERSION) \
     -Wall -Werror -O3 -nostdlib -nostartfiles -ffreestanding \
@@ -45,24 +45,26 @@ gen/nexmon.ld: $(OBJS)
 
 gen/nexmon.mk: $(OBJS) $(FW_PATH)/definitions.mk
 	@printf "\033[0;31m  GENERATING MAKE FILE\033[0m gen/nexmon.pre => %s\n" $@
-	$(Q)printf "patch.bin: gen/patch.elf FORCE\n" > $@
+	$(Q)printf "out_3_0xf0177000: gen/patch.elf FORCE\n" > $@
 	$(Q)sort gen/nexmon.pre | \
 		gawk -v src_file=gen/patch.elf -f $(NEXMON_ROOT)/buildtools/scripts/nexmon.mk.1.awk | \
-		gawk -f $(NEXMON_ROOT)/buildtools/scripts/nexmon.mk.2.awk >> $@
-	$(Q)printf '\t$$(CC)objcopy -O binary -j .literal.my_patch $$< gen/section.bin && dd if=gen/section.bin of=segment2_00980000_mod.bin bs=1 conv=notrunc seek=$$$$(($(NEX_LITPOOL_START) - 0x980000))' >> $@
+		gawk -v ramstart=$(RAMSTART) -f $(NEXMON_ROOT)/buildtools/scripts/nexmon.mk.2.awk >> $@
 	$(Q)printf "\nFORCE:\n" >> $@
 	$(Q)gawk '!a[$$0]++' $@ > tmp && mv tmp $@
 
 gen/memory.ld: $(FW_PATH)/definitions.mk
 	@printf "\033[0;31m  GENERATING LINKER FILE\033[0m %s\n" $@
-	$(Q)printf "rom : ORIGIN = 0x%08x, LENGTH = 0x%08x\n" $(ROMSTART) $(ROMSIZE) > $@
 	$(Q)printf "ram : ORIGIN = 0x%08x, LENGTH = 0x%08x\n" $(RAMSTART) $(RAMSIZE) >> $@
 	$(Q)printf "patch : ORIGIN = 0x%08x, LENGTH = 0x%08x\n" $(PATCHSTART) $(PATCHSIZE) >> $@
-	$(Q)printf "litpool : ORIGIN = 0x%08x, LENGTH = 0x%08x\n" $(NEX_LITPOOL_START) $(NEX_LITPOOL_SIZE) >> $@
 
 gen/patch.elf: patch.ld gen/nexmon.ld gen/memory.ld $(OBJS)
 	@printf "\033[0;31m  LINKING OBJECTS\033[0m => %s (details: log/linker.log, log/linker.err)\n" $@
-	$(Q)$(CC)ld -T $< -o $@ --abi-windowed  >>log/linker.log 2>>log/linker.err
+	$(Q)$(CC)ld -T $< -o $@ >>log/linker.log 2>>log/linker.err
+
+out_3_0xf0177000: init gen/patch.elf $(FW_PATH)/$(RAM_FILE) gen/nexmon.mk
+	$(Q)cp $(FW_PATH)/$(RAM_FILE) $@
+	@printf "\033[0;31m  APPLYING PATCHES\033[0m gen/nexmon.mk\n" 
+	$(Q)make -f gen/nexmon.mk >>log/patches.log
 
 
 #######################################################
@@ -164,9 +166,9 @@ gen/patch.elf: patch.ld gen/nexmon.ld gen/memory.ld $(OBJS)
 #	$(Q)echo "EFFA0200" | xxd -r -p - >> $@
 #	$(Q)cat $(FW_PATH)/swap_image.bin >> $@
 #	$(Q)echo "77" | xxd -r -p - >> $@
-#
-#clean: FORCE
-#	$(Q)rm -r *comp.bin 2nd_segment.bin firmware-5.bin obj gen log segment2_00980000_mod.bin segment2_00409200_mod.bin
+
+clean: FORCE
+	$(Q)rm -r obj gen log out_3_0xf0177000
 #
 #prepare:
 #	sudo ifconfig enp5s0 192.168.1.177/24
