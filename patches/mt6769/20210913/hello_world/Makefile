@@ -69,6 +69,12 @@ out_3_0xf0177000: init gen/patch.elf $(FW_PATH)/$(RAM_FILE) gen/nexmon.mk
 
 #######################################################
 
+WIFI_RAM_CODE_soc1_0_1a_1.bin: out_3_0xf0177000
+	$(Q)cp $(FW_PATH)/out_0_0x57000 .
+	$(Q)cp $(FW_PATH)/out_1_0x2010000 .
+	$(Q)cp $(FW_PATH)/out_2_0x40100200 .
+	$(Q)cp $(FW_PATH)/out_4_0xf01fe000 .
+
 #patch.bin: 
 #	$(Q)cp $(FW_PATH)/segment2_00980000.bin segment2_00980000_mod.bin
 #	$(Q)cp $(FW_PATH)/segment2_00409200.bin segment2_00409200_mod.bin
