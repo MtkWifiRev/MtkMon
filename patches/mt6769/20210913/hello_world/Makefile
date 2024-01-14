@@ -63,6 +63,7 @@ gen/patch.elf: patch.ld gen/nexmon.ld gen/memory.ld $(OBJS)
 
 out_3_0xf0177000: init gen/patch.elf $(FW_PATH)/$(RAM_FILE) gen/nexmon.mk
 	$(Q)cp $(FW_PATH)/$(RAM_FILE) $@
+	$(Q)chmod u+w $@
 	@printf "\033[0;31m  APPLYING PATCHES\033[0m gen/nexmon.mk\n" 
 	$(Q)make -f gen/nexmon.mk >>log/patches.log
 

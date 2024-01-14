@@ -8,7 +8,8 @@ export PLATFORMUNAME=$(uname -m)
 
 export NEXMON_ROOT=$(pwd)
 
-export CC=$NEXMON_ROOT/buildtools/gcc-12.2.0-nolibc/nds32le-linux/bin/nds32le-linux-
+#export CC=$NEXMON_ROOT/buildtools/gcc-12.2.0-nolibc/nds32le-linux/bin/nds32le-linux-
+export CC=$NEXMON_ROOT/buildtools/self_compile/toolchain/nds32le-linux-glibc-v3/bin/nds32le-linux-
 export CCPLUGIN=$NEXMON_ROOT/buildtools/gcc-nexmon-plugin/nexmon.so
 
 export Q=@
