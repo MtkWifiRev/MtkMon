@@ -51,7 +51,7 @@
     #define AT(CHIPVER, FWVER, ADDR)
 #endif
 
-AT(CHIP_VER_MTK, FW_VER_MTK, 0xf0198528)
+AT(CHIP_VER_MTK, FW_VER_MTK, 0xf019ab9c)
 void
 print_to_logshell(void *a1, void *a2, void *a3, void *a4, void *a5, void *a6)
 VOID_DUMMY
