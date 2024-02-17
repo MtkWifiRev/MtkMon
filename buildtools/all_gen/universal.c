@@ -76,6 +76,7 @@ typedef enum _ENUM_IMG_DL_IDX_T{
 } ENUM_IMG_DL_IDX_T, *P_ENUM_IMG_DL_IDX_T;
 
 ///////////////////////////////// GEN4 structure declaration START /////////////////////////////////
+//slightly different in my chip, see: "struct TAILER_COMMON_FORMAT_T"
 typedef struct _tailer_format_tag {
     UINT_32 addr;
     UINT_8 chip_info;
@@ -769,6 +770,31 @@ int  wlanGetConnacTailerInfo(
             close(fd);
             size_counter += prRegTailer->u4Len;
         }
+        /*
+		if( repack_mode == TRUE ){
+			long final_file_size = 0;
+			for( int i = 0; i < u4SecIdx; i++ ){
+				snprintf(extract_mode_struct.current_name, MAX_STRLEN_OUTPUT_FILE, out_%d_0x%x, u4SecIdx, prRegTailer->u4Addr);
+				int fd = open(extract_mode_struct.current_name, O_RDWR);
+				if( ! fd ){
+					break;
+				}
+				struct stat *fs = (struct stat *)malloc(sizeof(fs));
+				fstat(fd, fs);
+				if( fs->st_size != 0 ){
+					final_file_size += fs->st_size;
+                }
+			}
+			unsigned char *final_file_content = mmap(
+								NULL,
+								final_file_size,
+								PROT_READ   | PROT_WRITE,
+								MAP_PRIVATE | MAP_ANON,
+								-1,
+								0x00
+								);
+		}
+        */
         pucImgPtr += prRegTailer->u4Len;
         pucStartPtr += sizeof(struct TAILER_REGION_FORMAT_T);
     }
