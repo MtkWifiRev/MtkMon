@@ -6,7 +6,7 @@
 //#include <helper.h>
 
 void my_patch(void *a1, void *a2, void *a3, void *a4, void *a5, void *a6) {
-    print_to_logshell(a1, a2, a3, a4, a5, a6);
+    print_to_logshell("MTKMON :: Set Wifi Pwr:Max=%d,Min=%d.\n", a2, a3, a4, a5, a6);
 }
 
 
