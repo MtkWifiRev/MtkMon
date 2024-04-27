@@ -93,7 +93,7 @@ clean: FORCE
 
 install:
 	adb push WIFI_RAM_CODE_soc1_0_1a_1.bin /sdcard/
-	adb shell 'su -c "cp /sdcard/WIFI_RAM_CODE_soc1_0_1a_1.bin /data/adb/WIFI_RAM_CODE_soc1_0_1a_1.bin"'
-	adb shell 'su -c "chcon -v u:object_r:vendor_file:s0 /data/adb/WIFI_RAM_CODE_soc1_0_1a_1.bin"'
-	adb shell 'su -c "reboot"'
+	adb shell 'su -c "cp /sdcard/WIFI_RAM_CODE_soc1_0_1a_1.bin /vendor/firmware/WIFI_RAM_CODE_soc1_0_1a_1.bin"'
+#	adb shell 'su -c "chcon -v u:object_r:vendor_file:s0 /data/adb/WIFI_RAM_CODE_soc1_0_1a_1.bin"'
+#	adb shell 'su -c "reboot"'
 FORCE:
