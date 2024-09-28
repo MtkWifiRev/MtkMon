@@ -56,5 +56,24 @@ void
 print_to_logshell(void *a1, void *a2, void *a3, void *a4, void *a5, void *a6)
 VOID_DUMMY
 
+AT(CHIP_VER_MTK, FW_VER_MTK, 0xf019ab9c)
+void
+printf(const char *format, ...)
+VOID_DUMMY
+
+AT(CHIP_VER_MTK, FW_VER_MTK, 0xf019af08)
+void
+some_logging_related_function(int a1, int a2)
+VOID_DUMMY
+
+AT(CHIP_VER_MTK, FW_VER_MTK, 0xf01cfc98)
+int
+set_rf_test_mode_cmd_handler(void *a1)
+RETURN_DUMMY
+
+AT(CHIP_VER_MTK, FW_VER_MTK, 0xf0197044)
+void
+set_fw_op_mode(void *a)
+VOID_DUMMY
 
 #endif /*WRAPPER_C*/
