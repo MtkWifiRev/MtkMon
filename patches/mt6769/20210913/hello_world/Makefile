@@ -94,6 +94,7 @@ clean: FORCE
 #	ssh habanero "insmod /root/ath10k_core.ko debug_mask=0x432 && insmod /root/ath10k_pci.ko"
 
 install:
+	sudo adb shell 'su -mm -c magic_remount_rw'
 	sudo adb push WIFI_RAM_CODE_soc1_0_1a_1.bin /sdcard/
 	sudo adb shell 'su -c "cp /sdcard/WIFI_RAM_CODE_soc1_0_1a_1.bin /vendor/firmware/WIFI_RAM_CODE_soc1_0_1a_1.bin"'
 #	adb shell 'su -c "chcon -v u:object_r:vendor_file:s0 /data/adb/WIFI_RAM_CODE_soc1_0_1a_1.bin"'
