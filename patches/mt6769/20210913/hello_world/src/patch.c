@@ -21,7 +21,14 @@ JalPatch(my_patch, my_patch);
 void my_set_fw_op_mode(void *a1) {
     unsigned char *some_log_flag = (unsigned char *) 0xf021faef;
     *some_log_flag = 1;
-    printf("MTKMON :: set_fw_op_mode()\n");
+    //some_logging_related_function(0x24, 4);
+    
+    unsigned int gp_value;
+    //gp_value = __builtin_nds32_mfusr(0);
+    asm("mov55 %0, $gp" : "=r" (gp_value));
+    
+    //printf("MTKMON :: set_fw_op_mode()\n");
+    printf("MTKMON :: set_fw_op_mode(), gp_value: 0x%x\n", gp_value);
     set_fw_op_mode(a1);
 }
 
