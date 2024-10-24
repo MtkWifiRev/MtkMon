@@ -1,0 +1,115 @@
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_jump @ 0xf019b2ac
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_jump @ 0xf019b294
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_jump @ 0xf019b294
+  PATCH jal_my_patch3 @ 0xf019b34a
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH jal_my_patch3 @ 0xf019b34a
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_jump @ 0xf019b2c4
+  PATCH jal_my_patch3 @ 0xf019b34a
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH nop_assignment @ 0xf019b2c4
+  PATCH jal_my_patch3 @ 0xf019b34a
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH nop_assignment @ 0xf019b2c4
+  PATCH jal_my_patch3 @ 0xf019b34a
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH nop_assignment @ 0xf019b2c4
+  PATCH jal_my_patch3 @ 0xf019b34a
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH jal_my_patch3 @ 0xf019b34a
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_cmd_mem_dump @ 0xf019b268
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_cmd_mem_dump @ 0xf019b268
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_cmd_mem_dump @ 0xf019b268
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_cmd_mem_dump @ 0xf019b268
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_cmd_mem_dump @ 0xf019b268
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_cmd_mem_dump @ 0xf019b268
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_cmd_mem_dump @ 0xf019b268
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_cmd_mem_dump @ 0xf019b268
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_cmd_mem_dump @ 0xf019b268
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_cmd_mem_dump @ 0xf019b268
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_cmd_mem_dump @ 0xf019b268
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_cmd_mem_dump @ 0xf019b268
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+make[1]: Entering directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'
+  PATCH overwrite_cmd_mem_dump @ 0xf019b268
+  PATCH jal_my_set_fw_op_mode @ 0xf01cfcac
+  TARGETREGION patch @ f021b400
+make[1]: Leaving directory '/data/mediatek/mtkmon/patches/mt6769/20210913/overwrite_cmd_mem_dump'

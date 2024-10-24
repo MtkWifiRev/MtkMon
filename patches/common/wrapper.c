@@ -71,9 +71,31 @@ int
 set_rf_test_mode_cmd_handler(void *a1)
 RETURN_DUMMY
 
+/*
+AT(CHIP_VER_MTK, FW_VER_MTK, 0xf019b268)
+int
+cmd_mem_dump_maybe(int a1)
+RETURN_DUMMY
+*/
+
 AT(CHIP_VER_MTK, FW_VER_MTK, 0xf0197044)
 void
 set_fw_op_mode(void *a)
+VOID_DUMMY
+
+AT(CHIP_VER_MTK, FW_VER_MTK, 0xf0196278)
+void *
+wsysMemEventPktAlloc(void *a1)
+RETURN_DUMMY
+
+AT(CHIP_VER_MTK, FW_VER_MTK, 0xf01b2260)
+void
+FUN_f01b2260(void *a1)
+VOID_DUMMY
+
+AT(CHIP_VER_MTK, FW_VER_MTK, 0xf019b2c8)
+void
+LAB_f019b2c8(void)
 VOID_DUMMY
 
 #endif /*WRAPPER_C*/

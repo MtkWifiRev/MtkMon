@@ -99,4 +99,9 @@ install:
 	sudo adb shell 'su -c "cp /sdcard/WIFI_RAM_CODE_soc1_0_1a_1.bin /vendor/firmware/WIFI_RAM_CODE_soc1_0_1a_1.bin"'
 #	adb shell 'su -c "chcon -v u:object_r:vendor_file:s0 /data/adb/WIFI_RAM_CODE_soc1_0_1a_1.bin"'
 #	adb shell 'su -c "reboot"'
+
+reload:
+	sudo adb shell 'su -c "echo 0 > /dev/wmtWifi"'
+	sudo adb shell 'su -c "echo 1 > /dev/wmtWifi"'
+
 FORCE:

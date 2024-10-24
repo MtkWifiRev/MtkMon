@@ -37,6 +37,11 @@
     void \
     jal_ ## name(void) { asm("jal " #func "\n"); }
 
+#define JralPatch(name, func) \
+    __attribute__((naked)) \
+    void \
+    jral5_ ## name(void) { asm("jral5 " #func "\n"); }
+
 #define GenericPatch4(name, val) \
     const unsigned int gp4_ ## name = (unsigned int) (val);
 

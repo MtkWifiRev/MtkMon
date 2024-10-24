@@ -1,0 +1,2 @@
+/data/mediatek/mtkmon/buildtools/nds32le-linux-glibc-v3_pre_compiled/bin/nds32le-linux-ld: obj/patch.o: in function `overwrite_jump':
+patch.c:(.text.overwrite_jump+0x0): relocation truncated to fit: R_NDS32_9_PCREL_RELA against symbol `LAB_f019b2c8' defined in .text.overwrite_jump section in gen/patch.elf

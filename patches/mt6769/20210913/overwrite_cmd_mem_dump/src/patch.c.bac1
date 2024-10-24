@@ -1,0 +1,60 @@
+#pragma NEXMON targetregion "patch"
+
+#include <firmware_version.h>
+#include <patcher.h>
+#include <wrapper.h>
+//#include <helper.h>
+
+
+__attribute__((at(0xf019b268, "", CHIP_VER_MTK, FW_VER_MTK, "out_3_0xf0177000")))
+int overwrite_cmd_mem_dump(void *a1) {
+    unsigned char *pkt_data = (unsigned char *) (a1 + 0xc);
+    unsigned char *pkt_data2 = (unsigned char *) (pkt_data + 0x24);
+
+    unsigned char *some_log_flag = (unsigned char *) 0xf021faef;
+    *some_log_flag = 1;
+    printf("cmd_mem_dump_maybe() #2, a1 pointer: 0x%08x (0x%08x)\n", *((unsigned int *) a1), a1);
+    *some_log_flag = 1;
+    printf("cmd_mem_dump_maybe() #2, pkt_data: 0x%08x (0x%08x)\n", *(unsigned int *) pkt_data, pkt_data);
+    *some_log_flag = 1;
+    printf("cmd_mem_dump_maybe() #2, pkt_data2: 0x%08x (0x%08x)\n", *(unsigned int *)pkt_data2, pkt_data2);
+    return 0;
+}
+
+
+/*
+__attribute__((naked))
+void my_log_patch(int a1, int a2) {
+    asm (
+        "smw.adm s0, [sp], s3,0x2\n"
+        "addi10.sp -0xc\n"
+        "movi55 a0, 0x1\n"
+        "sethi ta, 0xf021f\n"
+        "sbi a0, [ta + 0xaef]\n"
+        "addi10.sp 0xc\n"
+        "lmw.bim s0,[sp],s3,0x2\n"
+        "ret5 lp\n"
+    );
+}
+
+__attribute__((at(0xf019af08, "", CHIP_VER_MTK, FW_VER_MTK, "out_3_0xf0177000")))
+JalPatch(my_log_patch, my_log_patch);
+*/
+
+void my_set_fw_op_mode(void *a1) {
+    unsigned char *some_log_flag = (unsigned char *) 0xf021faef;
+    *some_log_flag = 1;
+    //some_logging_related_function(0x24, 4);
+    
+    unsigned int gp_value;
+    //gp_value = __builtin_nds32_mfusr(0);
+    asm("mov55 %0, $gp" : "=r" (gp_value));
+    
+    //printf("MTKMON :: set_fw_op_mode()\n");
+    printf("MTKMON :: set_fw_op_mode(), gp_value: 0x%x\n", gp_value);
+    set_fw_op_mode(a1);
+}
+
+
+__attribute__((at(0xf01cfcac, "", CHIP_VER_MTK, FW_VER_MTK, "out_3_0xf0177000")))
+JalPatch(my_set_fw_op_mode, my_set_fw_op_mode);

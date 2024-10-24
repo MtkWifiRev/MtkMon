@@ -1,0 +1,11 @@
+0xf019ab9c DUMMY obj/wrapper.o print_to_logshell out_4_0xf01fe000
+0xf019ab9c DUMMY obj/wrapper.o printf out_4_0xf01fe000
+0xf019af08 DUMMY obj/wrapper.o some_logging_related_function out_4_0xf01fe000
+0xf01cfc98 DUMMY obj/wrapper.o set_rf_test_mode_cmd_handler out_4_0xf01fe000
+0xf0197044 DUMMY obj/wrapper.o set_fw_op_mode out_4_0xf01fe000
+0xf0196278 DUMMY obj/wrapper.o wsysMemEventPktAlloc out_4_0xf01fe000
+0xf01b2260 DUMMY obj/wrapper.o FUN_f01b2260 out_4_0xf01fe000
+0xf019b2c8 DUMMY obj/wrapper.o LAB_f019b2c8 out_4_0xf01fe000
+patch TARGETREGION obj/patch.o out_4_0xf01fe000
+0xf019b268 PATCH obj/patch.o overwrite_cmd_mem_dump out_3_0xf0177000
+0xf01cfcac PATCH obj/patch.o jal_my_set_fw_op_mode out_3_0xf0177000
