@@ -1,4 +1,4 @@
-FW_PATH=$(NEXMON_ROOT)/firmwares/mt7921/20240826
+FW_PATH=$(NEXMON_ROOT)/firmwares/mt7961/20240826
 include $(FW_PATH)/definitions.mk
 
 LOCAL_SRCS=$(wildcard src/*.c)
