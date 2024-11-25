@@ -58,55 +58,35 @@ struct mem_dump_struct {
 };
 
 void inline
-hexdump(void *addr, int len) {
+hexdump(unsigned char *addr, int len) {
     int i;
-    unsigned char buff[17];
     unsigned char *pc = (unsigned char *) addr;
 
     // Process every byte in the data.
     for (i = 0; i < len; i++) {
         // Multiple of 16 means new line (with line offset).
-
         if ((i % 16) == 0) {
-            // Just don't print ASCII for the zeroth line.
-            if (i != 0) {
-                unsigned char *some_log_flag = (unsigned char *) 0xf021faef;
-                *some_log_flag = 1;
-                printf("  %s\n", buff);
-            }
-
             // Output the offset.
-            unsigned char *some_log_flag = (unsigned char *) 0xf021faef;
-            *some_log_flag = 1;
             printf("  %04x ", i);
         }
 
         // Now the hex code for the specific character.
-        unsigned char *some_log_flag = (unsigned char *) 0xf021faef;
-        *some_log_flag = 1;
         printf(" %02x", pc[i]);
 
-        // And store a printable ASCII character for later.
-        if ((pc[i] < 0x20) || (pc[i] > 0x7e))
-            buff[i % 16] = '.';
-        else
-            buff[i % 16] = pc[i];
-        buff[(i % 16) + 1] = '\0';
     }
 
     // Pad out last line if not exactly 16 characters.
     while ((i % 16) != 0) {
-        unsigned char *some_log_flag = (unsigned char *) 0xf021faef;
-        *some_log_flag = 1;
         printf("   ");
         i++;
     }
 
-    // And print the final ASCII bit.
     unsigned char *some_log_flag = (unsigned char *) 0xf021faef;
     *some_log_flag = 1;
-    printf("  %s\n", buff);
+    printf("\n");
 }
+
+
 
 /*
 void my_patch3(struct pkt_struct *pkt) {
@@ -132,14 +112,21 @@ int overwrite_cmd_mem_dump(struct param_struct *param_1) {
     //printf("cmd_mem_dump_maybe(), cur_addr: 0x%08x, len: 0x%08x\n", dump_s->cur_addr, dump_s->len);
     printf("cmd_mem_dump_maybe(), cur_addr: 0x%08x, len: 0x%08x\n", dump_s->cur_addr, dump_s->len);
 
-    for(int i=0; i<dump_s->len; i++) {
-        unsigned char *some_log_flag = (unsigned char *) 0xf021faef;
+    if(dump_s->len % 4 != 0) {
         *some_log_flag = 1;
-        printf("    contents: %02X\n",
-            ((unsigned char *)dump_s->cur_addr)[i]);
+        printf("cannot print: len != mod 4\n");
+        return 0;
     }
-    //printf("cmd_mem_dump_maybe()\n");
-    //hexdump((void *) &(dump_s->cur_addr), dump_s->len);
+    for(int i=0; i<dump_s->len; i++) {
+        if(i % 4 == 0) {
+            *some_log_flag = 1;
+            printf("%02x %02x %02x %02x\n", 
+                   (((unsigned char *)dump_s->cur_addr)[i]), 
+                   (((unsigned char *)dump_s->cur_addr)[i+1]), 
+                   (((unsigned char *)dump_s->cur_addr)[i+2]), 
+                   (((unsigned char *)dump_s->cur_addr)[i+3]));
+        }
+    }
     return 0;
 }
 
