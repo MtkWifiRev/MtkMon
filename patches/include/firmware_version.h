@@ -38,7 +38,16 @@
 #define CHIP_VER_ALL                        0
 #define CHIP_VER_MTK                        8
 
+#define CHIP_VER_MT6769                     9
+#define CHIP_VER_MT7981                     10
+
+
 #define FW_VER_ALL                          0
 #define FW_VER_MTK                          8
+
+//for mt6769
+#define FW_VER_MTK_20210913                 9
+//for mt7961
+#define FW_VER_MTK_20240826                 10
 
 #endif /*FIRMWARE_VERSION_H*/
