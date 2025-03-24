@@ -760,7 +760,7 @@ int  wlanGetConnacTailerInfo(
 #endif
             snprintf(extract_mode_struct.current_name, MAX_STRLEN_OUTPUT_FILE, "out_%d_0x%x", u4SecIdx, prRegTailer->u4Addr);
             /** create a new file with the name of "extract_mode_struct.current_name" **/
-            int fd = open(extract_mode_struct.current_name, O_CREAT | O_WRONLY);
+            int fd = open(extract_mode_struct.current_name, O_CREAT | O_WRONLY, 0777);
             extract_mode_struct.tmp_data_pointer = malloc(prRegTailer->u4Len);
             memcpy(extract_mode_struct.tmp_data_pointer, prFwBuffer + size_counter, prRegTailer->u4Len);
             /** write the data to the file **/
