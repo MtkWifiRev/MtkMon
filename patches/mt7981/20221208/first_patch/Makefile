@@ -75,6 +75,8 @@ $(RAM_FILE): init gen/patch.elf $(FW_PATH)/$(RAM_FILE) gen/nexmon.mk
 #######################################################
 
 mt7981_rom_patch.bin: mt7981_wm.bin
+	$(Q)cp $(FW_PATH)/mt7981_rom_patch.bin .
+	${NEXMON_ROOT}/buildtools/PatchIncorporator/PatchIncorporator mt7981_rom_patch.bin mt7981_mod_wm.bin
 
 #mt7981_wm.bin: $(RAM_FILE)
 mt7981_wm.bin: 
@@ -90,33 +92,15 @@ mt7981_wm.bin:
 	$(Q)cp $(FW_PATH)/out_9_0xf0064000 .
 	$(Q)cp $(FW_PATH)/out_10_0xf0096000 .
 	$(Q)cp $(FW_PATH)/trailer.bin .
-	$(Q)printf '\x00\x00\x00\x00' | dd of="out_4_0xe009c400" bs=1 seek=$$(($$(stat --printf="%s" "out_4_0xe009c400") - 4)) conv=notrunc
-	$(Q)cat out_0_0x220a800 out_1_0x231dc00 out_2_0x414800 out_3_0xe003b000 out_4_0xe009c400 out_5_0x2229800 out_6_0x411600 out_7_0xf0025800 out_8_0xf0000000 out_9_0xf0064000 out_10_0xf0096000 trailer.bin > mt7981_wm_mod.bin
-
-#$(Q)cp $(FW_PATH)/out_4_0xe009c400 .
-#$(Q)stat --printf="%s" out_3_0xf0177000 |xargs printf '000%x' | fold -w2 |tac |tr -d "\n" | xxd -r -p - | dd of=trailer.bin bs=1 seek=196 conv=notrunc
-
-crc:
-	$(eval MY_VAR := $(shell ssh root@192.168.1.1 "dmesg" | grep 0x2229800 | grep BEFORE| tail -n 1 | awk '{print $$(NF-2)}' | tr -d ","))
-	@file_size=$$(stat -c%s out_4_0xe009c400 2>/dev/null || stat -f%z out_4_0xe009c400); \
-	hex_rev=$$(printf '%08x' $(MY_VAR) | sed 's/\(..\)/\1\n/g' | tac | tr -d '\n'); \
-	printf "\x$${hex_rev:0:2}\x$${hex_rev:2:2}\x$${hex_rev:4:2}\x$${hex_rev:6:2}" | \
-	dd of=out_4_0xe009c400 bs=1 seek=$$(($$file_size - 4)) count=4 conv=notrunc 2>/dev/null
-
-#$(info MY_VAR is [$(MY_VAR)])
-
-#ssh root@192.168.1.1 "dmesg" | grep 0x2229800 | grep BEFORE| tail -n 1 | awk '{print $$(NF-2)}' | tr -d ","
+	$(Q)cat out_0_0x220a800 out_1_0x231dc00 out_2_0x414800 out_3_0xe003b000 out_4_0xe009c400 out_5_0x2229800 out_6_0x411600 out_7_0xf0025800 out_8_0xf0000000 out_9_0xf0064000 out_10_0xf0096000 trailer.bin > mt7981_mod_wm.bin
 
 clean: FORCE
-	$(Q)rm -r obj gen log out_0_0x220a800 out_1_0x231dc00 out_2_0x414800 out_3_0xe003b000 out_4_0xe009c400 out_5_0x2229800 out_6_0x411600 out_7_0xf0025800 out_8_0xf0000000 out_9_0xf0064000 out_10_0xf0096000 trailer.bin mt7981_wm_mod.bin
+	$(Q)rm -r obj gen log out_0_0x220a800 out_1_0x231dc00 out_2_0x414800 out_3_0xe003b000 out_4_0xe009c400 out_5_0x2229800 out_6_0x411600 out_7_0xf0025800 out_8_0xf0000000 out_9_0xf0064000 out_10_0xf0096000 trailer.bin mt7981_mod_wm.bin mt7981_rom_patch.bin final_ram_fw.bin final_rom_fw.bin
 
-#prepare:
-#	sudo ifconfig enp5s0 192.168.1.177/24
-#	ssh habanero "rmmod ath10k_pci && rmmod ath10k_core"
-#	ssh habanero "insmod /root/ath10k_core.ko debug_mask=0x432 && insmod /root/ath10k_pci.ko"
 
 install:
-	scp -O -oHostKeyAlgorithms=+ssh-rsa mt7981_wm_mod.bin root@192.168.1.1:/lib/firmware/mediatek/mt7981_wm.bin
+	scp -O -oHostKeyAlgorithms=+ssh-rsa final_ram_fw.bin root@192.168.1.1:/lib/firmware/mediatek/mt7981_wm.bin
+	scp -O -oHostKeyAlgorithms=+ssh-rsa final_rom_fw.bin root@192.168.1.1:/lib/firmware/mediatek/mt7981_rom_patch.bin
 
 reload:
 	ssh root@192.168.1.1 "rmmod mt7915e && rmmod mt76_connac_lib && modprobe mt76_connac_lib && modprobe mt7915e"
