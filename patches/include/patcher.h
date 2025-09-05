@@ -32,6 +32,11 @@
  *                                                                         *
  **************************************************************************/
 
+#define JPatch(name, func) \
+    __attribute__((naked)) \
+    void \
+    j_ ## name(void) { asm("j " #func "\n"); }
+
 #define JalPatch(name, func) \
     __attribute__((naked)) \
     void \

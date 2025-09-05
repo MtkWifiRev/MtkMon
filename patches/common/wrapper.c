@@ -56,7 +56,7 @@ void
 print_to_logshell(void *a1, void *a2, void *a3, void *a4, void *a5, void *a6)
 VOID_DUMMY
 
-AT(CHIP_VER_MTK, FW_VER_MTK, 0x822000)
+AT(CHIP_VER_MTK, FW_VER_MTK, 0xe0041dd4)
 int
 print_related(void *a1, void *a2, void *a3, void *a4, void *a5, void *a6)
 RETURN_DUMMY

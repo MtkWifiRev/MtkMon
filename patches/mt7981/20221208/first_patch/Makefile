@@ -16,10 +16,12 @@ CFLAGS= \
 	-DNEXMON_CHIP=$(NEXMON_CHIP) \
 	-DNEXMON_FW_VERSION=$(NEXMON_FW_VERSION) \
     -Wall -Werror -O3 -nostdlib -nostartfiles -ffreestanding \
-	-ffunction-sections -fdata-sections \
+        -ffunction-sections \
 	-I$(NEXMON_ROOT)/patches/include \
 	-I$(FW_PATH) \
 	-Isrc
+
+#	-ffunction-sections -fdata-sections \
 
 all: mt7981_rom_patch.bin
 
@@ -54,45 +56,45 @@ gen/nexmon.mk: $(OBJS) $(FW_PATH)/definitions.mk
 
 gen/memory.ld: $(FW_PATH)/definitions.mk
 	@printf "\033[0;31m  GENERATING LINKER FILE\033[0m %s\n" $@
-	$(Q)printf "ram : ORIGIN = 0x%08x, LENGTH = 0x%08x\n" $(RAMSTART) $(RAMSIZE) >> $@
+	$(Q)printf "out3 : ORIGIN = 0x%08x, LENGTH = 0x%08x\n" $(OUT3_START) $(OUT3_SIZE) > $@
+	$(Q)printf "out4 : ORIGIN = 0x%08x, LENGTH = 0x%08x\n" $(OUT4_START) $(OUT4_SIZE) >> $@
+	$(Q)printf "out10 : ORIGIN = 0x%08x, LENGTH = 0x%08x\n" $(OUT10_START) $(OUT10_SIZE) >> $@
 	$(Q)printf "patch : ORIGIN = 0x%08x, LENGTH = 0x%08x\n" $(PATCHSTART) $(PATCHSIZE) >> $@
 
 gen/patch.elf: patch.ld gen/nexmon.ld gen/memory.ld $(OBJS)
 	@printf "\033[0;31m  LINKING OBJECTS\033[0m => %s (details: log/linker.log, log/linker.err)\n" $@
-	$(Q)$(CC)ld -T $< -o $@ >>log/linker.log 2>>log/linker.err
+	$(Q)$(CC)ld -T $< -o $@
+	
+#$(Q)$(CC)ld -T $< -o $@ >>log/linker.log 2>>log/linker.err
 
 $(RAM_FILE): init gen/patch.elf $(FW_PATH)/$(RAM_FILE) gen/nexmon.mk
-	# file contains patch code
-	$(Q)cp $(FW_PATH)/$(RAM_FILE) $@
-	$(Q)chmod u+w $@
-	# file needed to modify jump
-	$(Q)cp $(FW_PATH)/out_3_0xf0177000 .
-	$(Q)chmod u+w out_3_0xf0177000
+	# files contains patch code
+	$(Q)cp $(FW_PATH)/out_3_0xe003b000 .
+	$(Q)cp ${FW_PATH}/out_4_0xe009c400 .
+	$(Q)cp $(FW_PATH)/out_10_0xf0096000 .
 	@printf "\033[0;31m  APPLYING PATCHES\033[0m gen/nexmon.mk\n" 
-	$(Q)make -f gen/nexmon.mk >>log/patches.log
+	$(Q)make -f gen/nexmon.mk
 
+#$(Q)make -f gen/nexmon.mk >>log/patches.log
 
 #######################################################
 
 mt7981_rom_patch.bin: mt7981_wm.bin
 	$(Q)cp $(FW_PATH)/mt7981_rom_patch.bin .
-	${NEXMON_ROOT}/buildtools/PatchIncorporator/PatchIncorporator mt7981_rom_patch.bin mt7981_mod_wm.bin
+	${NEXMON_ROOT}/buildtools/PatchIncorporator/PatchIncorporator mt7981_rom_patch.bin mt7981_mod_wm.bin >/dev/null
 
-#mt7981_wm.bin: $(RAM_FILE)
-mt7981_wm.bin: 
+mt7981_wm.bin: $(RAM_FILE)
 	$(Q)cp $(FW_PATH)/out_0_0x220a800 .
 	$(Q)cp $(FW_PATH)/out_1_0x231dc00 .
 	$(Q)cp $(FW_PATH)/out_2_0x414800 .
-	$(Q)cp $(FW_PATH)/out_3_0xe003b000 .
-	$(Q)cp ${FW_PATH}/out_4_0xe009c400 .
 	$(Q)cp $(FW_PATH)/out_5_0x2229800 .
 	$(Q)cp $(FW_PATH)/out_6_0x411600 .
 	$(Q)cp $(FW_PATH)/out_7_0xf0025800 .
 	$(Q)cp $(FW_PATH)/out_8_0xf0000000 .
 	$(Q)cp $(FW_PATH)/out_9_0xf0064000 .
-	$(Q)cp $(FW_PATH)/out_10_0xf0096000 .
 	$(Q)cp $(FW_PATH)/trailer.bin .
 	$(Q)cat out_0_0x220a800 out_1_0x231dc00 out_2_0x414800 out_3_0xe003b000 out_4_0xe009c400 out_5_0x2229800 out_6_0x411600 out_7_0xf0025800 out_8_0xf0000000 out_9_0xf0064000 out_10_0xf0096000 trailer.bin > mt7981_mod_wm.bin
+
 
 clean: FORCE
 	$(Q)rm -r obj gen log out_0_0x220a800 out_1_0x231dc00 out_2_0x414800 out_3_0xe003b000 out_4_0xe009c400 out_5_0x2229800 out_6_0x411600 out_7_0xf0025800 out_8_0xf0000000 out_9_0xf0064000 out_10_0xf0096000 trailer.bin mt7981_mod_wm.bin mt7981_rom_patch.bin final_ram_fw.bin final_rom_fw.bin
