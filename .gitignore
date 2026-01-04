@@ -1,2 +1,3 @@
 buildtools/all_gen/all_gen
-firmwares/mt6769/20210913/out*
+firmwares/**/out*
+firmwares/**/trailer.bin
