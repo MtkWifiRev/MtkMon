@@ -9,7 +9,7 @@ int
 my_patch(void *a1, void *a2, void *a3, void *a4, void *a5, void *a6) {
     char str[] = "MTKMON MTKMON";
     a1 = str;
-    return print_related(a1, a2, a3, a4, a5, a6);
+    return wsysDbgOutput(a1, a2, a3, a4, a5, a6);
 }
 
 __attribute__((at(0xe0049c72, "", CHIP_VER_MTK, FW_VER_MTK, "out_3_0xe003b000")))

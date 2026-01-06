@@ -32,80 +32,15 @@
  *                                                                         *
  **************************************************************************/
 
-#ifndef WRAPPER_C
-#define WRAPPER_C
+#ifndef STRUCTS_H
+#define STRUCTS_H
 
-#include <firmware_version.h>
-#include <structs.h>
-
-#ifndef WRAPPER_H
-    // if this file is not included in the wrapper.h file, create dummy functions
-    #define VOID_DUMMY { ; }
-    #define RETURN_DUMMY { ; return 0; }
-
-    #define AT(CHIPVER, FWVER, ADDR) __attribute__((at(ADDR, "dummy", CHIPVER, FWVER)))
-#else
-    // if this file is included in the wrapper.h file, create prototypes
-    #define VOID_DUMMY ;
-    #define RETURN_DUMMY ;
-    #define AT(CHIPVER, FWVER, ADDR)
+#ifndef	PAD
+#define	_PADLINE(line)	pad ## line
+#define	_XSTR(line)	_PADLINE(line)
+#define	PAD		_XSTR(__LINE__)
 #endif
 
-AT(CHIP_VER_MTK, FW_VER_MTK, 0xf019ab9c)
-void
-print_to_logshell(void *a1, void *a2, void *a3, void *a4, void *a5, void *a6)
-VOID_DUMMY
+#include "../structs.common.h"
 
-AT(CHIP_VER_MT7981, FW_VER_MTK, 0xe0041dd4)
-AT(CHIP_VER_MT7915, FW_VER_MTK, 0xe0055014)
-int
-wsysDbgOutput(void *a1, void *a2, void *a3, void *a4, void *a5, void *a6)
-RETURN_DUMMY
-
-/*
-AT(CHIP_VER_MTK, FW_VER_MTK, 0xf019ab9c)
-void
-printf(const char *format, ...)
-VOID_DUMMY
-
-AT(CHIP_VER_MTK, FW_VER_MTK, 0xf019af08)
-void
-some_logging_related_function(int a1, int a2)
-VOID_DUMMY
-
-AT(CHIP_VER_MTK, FW_VER_MTK, 0xf01cfc98)
-int
-set_rf_test_mode_cmd_handler(void *a1)
-RETURN_DUMMY
-*/
-
-/*
-AT(CHIP_VER_MTK, FW_VER_MTK, 0xf019b268)
-int
-cmd_mem_dump_maybe(int a1)
-RETURN_DUMMY
-*/
-
-/*
-AT(CHIP_VER_MTK, FW_VER_MTK, 0xf0197044)
-void
-set_fw_op_mode(void *a)
-VOID_DUMMY
-
-AT(CHIP_VER_MTK, FW_VER_MTK, 0xf0196278)
-void *
-wsysMemEventPktAlloc(void *a1)
-RETURN_DUMMY
-
-AT(CHIP_VER_MTK, FW_VER_MTK, 0xf01b2260)
-void
-FUN_f01b2260(void *a1)
-VOID_DUMMY
-
-AT(CHIP_VER_MTK, FW_VER_MTK, 0xf019b2c8)
-void
-LAB_f019b2c8(void)
-VOID_DUMMY
-*/
-
-#endif /*WRAPPER_C*/
+#endif /*STRUCTS_H */

@@ -36,11 +36,9 @@
 #define FIRMWARE_VERSION_H
 
 #define CHIP_VER_ALL                        0
+#define CHIP_VER_MT7981                     1
+#define CHIP_VER_MT7915                     2
 #define CHIP_VER_MTK                        8
-
-#define CHIP_VER_MT6769                     9
-#define CHIP_VER_MT7981                     10
-
 
 #define FW_VER_ALL                          0
 #define FW_VER_MTK                          8
