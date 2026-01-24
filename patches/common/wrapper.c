@@ -58,6 +58,7 @@ VOID_DUMMY
 
 AT(CHIP_VER_MT7981, FW_VER_MTK, 0xe0041dd4)
 AT(CHIP_VER_MT7915, FW_VER_MTK, 0xe0055014)
+//__attribute__((at(0xe005014, "dummy", CHIP_VER_MT7915, FW_VER_MTK, "out_3_0xe0022800")))
 int
 wsysDbgOutput(void *a1, void *a2, void *a3, void *a4, void *a5, void *a6)
 RETURN_DUMMY

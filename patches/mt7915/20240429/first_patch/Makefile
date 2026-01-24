@@ -55,6 +55,7 @@ gen/nexmon.mk: $(OBJS) $(FW_PATH)/definitions.mk
 gen/memory.ld: $(FW_PATH)/definitions.mk
 	@printf "\033[0;31m  GENERATING LINKER FILE\033[0m %s\n" $@
 	$(Q)printf "out3 : ORIGIN = 0x%08x, LENGTH = 0x%08x\n" $(OUT3_START) $(OUT3_SIZE) > $@
+	#$(Q)printf "out0 : ORIGIN = 0x%08x, LENGTH = 0x%08x\n" $(OUT0_START) $(OUT0_SIZE) >> $@
 	$(Q)printf "patch : ORIGIN = 0x%08x, LENGTH = 0x%08x\n" $(PATCHSTART) $(PATCHSIZE) >> $@
 
 gen/patch.elf: patch.ld gen/nexmon.ld gen/memory.ld $(OBJS)
@@ -63,6 +64,7 @@ gen/patch.elf: patch.ld gen/nexmon.ld gen/memory.ld $(OBJS)
 
 $(RAM_FILE): init gen/patch.elf $(FW_PATH)/$(RAM_FILE) gen/nexmon.mk
 	# files contains patch code
+	#$(Q)cp $(FW_PATH)/out_0_0x21fc00 .
 	$(Q)cp $(FW_PATH)/out_3_0xe0022800 .
 	@printf "\033[0;31m  APPLYING PATCHES\033[0m gen/nexmon.mk\n" 
 	$(Q)make -f gen/nexmon.mk
@@ -74,8 +76,11 @@ $(RAM_FILE): init gen/patch.elf $(FW_PATH)/$(RAM_FILE) gen/nexmon.mk
 
 mt7915_wm.bin.crc: $(RAM_FILE)
 	dd if=/dev/zero of=out_3_0xe0022800 bs=1 count=4 seek=$$(( $$(wc -c < out_3_0xe0022800) - 4 )) conv=notrunc
-	@python3 $(NEXMON_ROOT)/buildtools/crc.py out_3_0xe0022800 $@
-	dd if=$@ of=out_3_0xe0022800 bs=1 count=4 seek=$$(( $$(wc -c < out_3_0xe0022800) - 4 )) conv=notrunc
+	#dd if=/dev/zero of=out_0_0x21fc00 bs=1 count=4 seek=$$(( $$(wc -c < out_0_0x21fc00) - 4 )) conv=notrunc
+	@python3 $(NEXMON_ROOT)/buildtools/crc.py out_3_0xe0022800 out_3.crc
+	#@python3 $(NEXMON_ROOT)/buildtools/crc.py out_0_0x21fc00 out_0.crc
+	dd if=out_3.crc of=out_3_0xe0022800 bs=1 count=4 seek=$$(( $$(wc -c < out_3_0xe0022800) - 4 )) conv=notrunc
+	#dd if=out_0.crc of=out_0_0x21fc00 bs=1 count=4 seek=$$(( $$(wc -c < out_0_0x21fc00) - 4 )) conv=notrunc
 
 mt7915_wm.bin: mt7915_wm.bin.crc
 	$(Q)cp $(FW_PATH)/out_0_0x21fc00 .
@@ -89,7 +94,7 @@ mt7915_wm.bin: mt7915_wm.bin.crc
 #	$(Q)cp $(FW_PATH)/out_3_0xe0022800 .
 
 clean: FORCE
-	$(Q)rm -r obj gen log out_0_0x21fc00 out_1_0x31dc00 out_2_0x417400 out_3_0xe0022800 out_4_0xe0086e00 out_5_0x23ac00 out_6_0x400000 trailer.bin mt7915_mod_wm.bin mt7915_wm.bin.crc
+	$(Q)rm -r obj gen log out_0_0x21fc00 out_1_0x31dc00 out_2_0x417400 out_3_0xe0022800 out_4_0xe0086e00 out_5_0x23ac00 out_6_0x400000 trailer.bin mt7915_mod_wm.bin out_3.crc
 
 install:
 	scp -O -oHostKeyAlgorithms=+ssh-rsa final_ram_fw.bin root@192.168.1.1:/lib/firmware/mediatek/mt7981_wm.bin
