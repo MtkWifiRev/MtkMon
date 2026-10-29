@@ -12,26 +12,12 @@ NEXMON_FW_VERSION_NUM=`$(NEXMON_ROOT)/buildtools/scripts/getdefine.sh $(NEXMON_F
 
 NEXMON_ARCH=nds32
 
-HEADER_SIZE=0x0
-
-TRAILER_START=0x000c1520
-
-1ST_SEGMENT_START=0x0
-1ST_SEGMENT_SIZE=0x0
-
-2ND_SEGMENT_START=0x0
-2ND_SEGMENT_SIZE=0x0
-
-SWAP_IMG_START=0x0
-SWAP_IMG_SIZE=0x0
+TRAILER_START=0x000c1460
 
 # Region 0 - the main WM code segment, and the one we patch.
 RAM_FILE=out_0_0x915000
 RAMSTART=0x915000
 RAMSIZE=0x58c10
-
-NEX_LITPOOL_START=0x0
-NEX_LITPOOL_SIZE=0x0
 
 # Patch area: the code cave between the end of the last real function
 # (0x0096cfbb, which is also the end of the 512-entry EX9 instruction table at
