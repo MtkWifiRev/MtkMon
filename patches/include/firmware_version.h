@@ -39,6 +39,7 @@
 #define CHIP_VER_MT7981                     1
 #define CHIP_VER_MT7915                     2
 #define CHIP_VER_MTK                        8
+#define CHIP_VER_MT7961                     3
 
 #define FW_VER_ALL                          0
 #define FW_VER_MTK                          8
@@ -47,5 +48,7 @@
 #define FW_VER_MTK_20210913                 9
 //for mt7961
 #define FW_VER_MTK_20240826                 10
+//for mt7961 (MT7921AU), linux-firmware build 20260224110949
+#define FW_VER_MTK_20260224                 11
 
 #endif /*FIRMWARE_VERSION_H*/

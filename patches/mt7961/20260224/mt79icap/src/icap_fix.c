@@ -35,9 +35,9 @@
 
 /* same macro set wrapper.c uses (this TU does not include wrapper.h) */
 #ifndef WRAPPER_H
-    #define VOID_DUMMY { ; }
-    #define RETURN_DUMMY { ; return 0; }
-    #define AT(CHIPVER, FWVER, ADDR) __attribute__((at(ADDR, "dummy", CHIPVER, FWVER)))
+    #define VOID_DUMMY { }
+    #define RETURN_DUMMY { }
+    #define AT(CHIPVER, FWVER, ADDR) __attribute__((naked, at(ADDR, "dummy", CHIPVER, FWVER)))
 #endif
 
 #define ICAP_MODE   (*(volatile unsigned int *)0x02017310)

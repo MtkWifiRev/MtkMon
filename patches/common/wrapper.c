@@ -8,10 +8,14 @@
 #include <firmware_version.h>
 #include <structs.h>
 
+/* Placeholders for firmware functions, linked at their firmware addresses.
+ * Naked with empty bodies (built with -mno-ret-in-naked-func) they emit no
+ * code, which would otherwise overlap a patch placed at the same address.
+ */
 #ifndef WRAPPER_H
-    #define VOID_DUMMY { ; }
-    #define RETURN_DUMMY { ; return 0; }
-    #define AT(CHIPVER, FWVER, ADDR) __attribute__((at(ADDR, "dummy", CHIPVER, FWVER)))
+    #define VOID_DUMMY { }
+    #define RETURN_DUMMY { }
+    #define AT(CHIPVER, FWVER, ADDR) __attribute__((naked, at(ADDR, "dummy", CHIPVER, FWVER)))
 #else
     #define VOID_DUMMY ;
     #define RETURN_DUMMY ;
