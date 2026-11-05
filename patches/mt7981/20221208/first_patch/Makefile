@@ -16,7 +16,7 @@ CFLAGS= \
 	-DNEXMON_CHIP=$(NEXMON_CHIP) \
 	-DNEXMON_FW_VERSION=$(NEXMON_FW_VERSION) \
     -Wall -Werror -O3 -nostdlib -nostartfiles -ffreestanding \
-        -ffunction-sections \
+        -ffunction-sections -mno-ret-in-naked-func \
 	-I$(NEXMON_ROOT)/patches/include \
 	-I$(FW_PATH) \
 	-Isrc

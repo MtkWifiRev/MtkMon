@@ -1,3 +1,7 @@
 buildtools/all_gen/all_gen
 firmwares/**/out*
 firmwares/**/trailer.bin
+buildtools/nds32le-linux-glibc-v3_pre_compiled/
+buildtools/nds32le-linux-glibc-v3_pre_compiled.tar.xz*
+buildtools/gcc-nexmon-plugin/*.o
+buildtools/gcc-nexmon-plugin/*.so
