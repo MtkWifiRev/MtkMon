@@ -4,7 +4,7 @@ FW_PATH=$(NEXMON_ROOT)/firmwares/mt7961/20260224
 # loaded into the chip. The mt7921-drv driver streams only on firmware labelled
 # iq_dma_vNN (NN >= 65). Empty keeps the stock "____010000" (the driver then
 # refuses to stream unless loaded with iq_fw_check=0).
-FW_LABEL ?= iq_dma_v65
+FW_LABEL ?= iq_dma_v66
 include $(FW_PATH)/definitions.mk
 
 LOCAL_SRCS=$(wildcard src/*.c)
@@ -26,11 +26,6 @@ CFLAGS= \
 	-I$(NEXMON_ROOT)/patches/include \
 	-I$(FW_PATH) \
 	-Isrc
-
-# v62: size-optimize iq_live.c (the patch cave is 2820 bytes). Target-specific
-# so that no optimize() attributes are needed: those made gcc append ret5 to
-# the naked JalPatch stubs.
-obj/iq_live.o: CFLAGS += -Os
 
 all: WIFI_RAM_CODE_MT7961_1.bin
 

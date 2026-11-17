@@ -22,9 +22,7 @@
 #include <firmware_version.h>
 #include <patcher.h>
 
-/* Not called: the body is the replacement bytes for the 4-byte lwi.gp.
- * NDS32 instruction words are stored big-endian. */
+/* The replacement bytes for the 4-byte lwi.gp: `movi $r0, #2`. NDS32
+ * instruction words are stored big-endian. */
 __attribute__((at(0x009167a0, "", CHIP_VER_MT7961, FW_VER_MTK_20260224, "out_0_0x915000")))
-__attribute__((naked)) void sysram_icap_mode(void) {
-    asm(".byte 0x44, 0x00, 0x00, 0x02 \n");	/* movi $r0, #2 */
-}
+const unsigned char sysram_icap_mode[4] = { 0x44, 0x00, 0x00, 0x02 };

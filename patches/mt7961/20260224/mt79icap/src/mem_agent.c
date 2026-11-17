@@ -10,14 +10,11 @@
  * scan + traffic, so the firmware does not use them. Each firmware reload
  * re-zeroes the range (crt .bss clear), so the mailbox always starts idle.
  *
- * The trampoline calls this function; gcc 8.0.1-nds32 -O2/-O3 does NOT emit a
- * return instruction for a leaf function with a fully merged epilogue (the
- * code just falls off the end - straight into whatever the linker places
- * next, which is mem_agent_tramp => infinite self-recursion, $sp runs away,
- * WM dead at the first MCU command - that is exactly the "Message 0004008a
- * (seq 11) timeout" failure of the first mem_agent build). The trailing
- * asm ret5 forces a real return on every path. Verified in gen/patch.elf:
- * every path ends in ret5 $lp. */
+ * Up to v65 mem_agent ended in an explicit asm ret5: the old patched gcc
+ * emitted no return for frameless leaf functions at -O1 and above (the first
+ * build fell through into mem_agent_tramp and recursed until the WM died).
+ * The unmodified toolchain returns normally.
+ */
 #pragma NEXMON targetregion "patch"
 #include <firmware_version.h>
 #include <patcher.h>
@@ -31,11 +28,12 @@ void mem_agent(void) {
     if (op == 1) MB_VAL = *(volatile unsigned int *)MB_ADDR;       /* read  */
     else if (op == 2) *(volatile unsigned int *)MB_ADDR = MB_VAL;  /* write */
     MB_TRIG = 0;
-    asm volatile("ret5 $lp");
-    /* NOTE: no "else return;" above - adding it makes this gcc miscompile the
-     * idle path into the read path (beqc/bnec fusion bug, seen at -O3). */
 }
 
+/* Spliced over `addi $r6, $r0, 0x20` at 0x00920dc2, which is not a call: the
+ * hook must keep the caller's registers and re-run that instruction, whose
+ * result goes to the callee-saved $r6. C cannot express either, so this
+ * trampoline stays assembly. */
 __attribute__((naked)) void mem_agent_tramp(void) {
     asm(
         "addi $sp, $sp, -8   \n"
